@@ -21,3 +21,9 @@ run npm start
 
 if localhost:8888 doesn't automatically open in a new window, trying searching it
 this should word, but I would'nt be surprised if I'm forgetting some of the steps I took since it was so long ago. 
+
+I used the first half of this
+https://youtu.be/f5OLDvwP-Ug
+
+And I followed all of this for my base
+https://youtu.be/prayNyuN3w0
