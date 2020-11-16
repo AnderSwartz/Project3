@@ -16,8 +16,9 @@ class App extends Component {
     this.state = {
       loggedIn: token ? true : false,
       nowPlaying: { name: 'Not Checked', image: '' },
-      favArtists: {names:""},
-      newPlaylist:{tracks:[]}
+      favArtists: {names:"",uri:''},
+      newTracks:{tracks:[]},
+      newPlaylist:{playlist:""}
     }
   }
   getHashParams() {
@@ -61,20 +62,37 @@ class App extends Component {
           response.items[2].name +", " + response.items[3].name +", " + 
           response.items[4].name +", " + response.items[5].name +", " + 
           response.items[6].name +", " + response.items[7].name +", " + 
-          response.items[8].name +", " + response.items[9].name
+          response.items[8].name +", " + response.items[9].name,
+          uri1: response.items[0].uri.substring(15),
+          uri2: response.items[1].uri.substring(15),
+          uri3: response.items[2].uri.substring(15)
+          //uriCleaned: this.state.favArtists.uri
           
         }
       })
     })
   }
 
+  getSongsForPlaylist(){
+    //spotifyWebApi.getRecommendations({seed_artists: ['6mfK6Q2tzLMEchAr0e9Uzu']})
+    spotifyWebApi.getRecommendations({seed_artists: [this.state.favArtists.uri1,this.state.favArtists.uri2,this.state.favArtists.uri3]})
+    .then((response) =>{
+      console.log(response)
+      this.setState({
+        newTracks:{
+          tracks: response.tracks[0].name
+        }
+      })
+    })
+  }
+
   makePlaylist(){
-    spotifyWebApi.getRecommendations()
+    spotifyWebApi.createPlaylist(['playlist title'])
     .then((response) =>{
       console.log(response)
       this.setState({
         newPlaylist:{
-          tracks: response
+          tracks: response.tracks[0].name
         }
       })
     })
@@ -127,16 +145,18 @@ class App extends Component {
       <div className="App">
         <a href='http://localhost:8888' > Login to Spotify </a>
         <div>
-          Now Playing: { this.state.nowPlaying.name }
+          Now Playing: {this.state.nowPlaying.name }
+          
         </div>
        
         <div>
         Fav artists: {this.state.favArtists.names}
+        {this.state.favArtists.uri}
         
         </div>
 
         <div>
-        Recommendations: {this.state.newPlaylist.tracks}
+        Recommendations: {this.state.newTracks.tracks}
         
         </div>
        
@@ -157,8 +177,8 @@ class App extends Component {
         }
 
         { this.state.loggedIn &&
-          <button onClick={() => this.makePlaylist()}>
-            Recommendations: 
+          <button onClick={() => this.getSongsForPlaylist()}>
+            Recommendations 
           </button>
         }
         
