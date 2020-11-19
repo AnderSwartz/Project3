@@ -80,7 +80,10 @@ class App extends Component {
       console.log(response)
       this.setState({
         newTracks:{
-          tracks: response.tracks[0].name
+          tracks: response.tracks[0].name + ", " + response.tracks[1].name + ", " + response.tracks[2].name + ", " + 
+          response.tracks[3].name + ", " + response.tracks[4].name + ", " +  response.tracks[5].name + ", " + response.tracks[6].name + ", " 
+          + response.tracks[7].name + ", " + 
+          response.tracks[8].name + ", " + response.tracks[9].name + ", " + response.tracks[10].name,
         }
       })
     })
